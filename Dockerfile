@@ -20,4 +20,4 @@ COPY --from=build /app/scripts ./scripts
 COPY --from=deps /app/node_modules ./node_modules
 USER app
 EXPOSE 3000
-CMD ["sh", "-c", "node --experimental-strip-types scripts/migrate.ts && node server.js"]
+CMD ["sh", "-c", "node scripts/migrate.mjs && HOSTNAME=0.0.0.0 node server.js"]
