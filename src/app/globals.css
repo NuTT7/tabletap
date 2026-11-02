@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Noto Sans Thai", "Sukhumvit Set", "Leelawadee UI", "Thonburi", system-ui, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
+
+  --color-paper: #f6f1e7;
+  --color-ink: #1d1a16;
+  --color-muted: #6f6659;
+  --color-line: #ded5c4;
+  --color-chili: #c2410c;
+  --color-chili-dark: #9a3412;
+  --color-basil: #3f6212;
+  --color-turmeric: #ca8a04;
+  --color-board: #161412;
+  --color-ticket: #fffdf8;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+
+/* Receipt-style dashed divider used on tickets and bills. */
+.dashed {
+  background-image: linear-gradient(to right, var(--color-line) 50%, transparent 0);
+  background-size: 8px 1px;
+  background-repeat: repeat-x;
+  height: 1px;
+}
+
+@keyframes arrive {
+  from {
+    transform: translateY(-6px);
+    box-shadow: 0 0 0 3px var(--color-turmeric);
+  }
+  to {
+    transform: none;
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+.ticket-new {
+  animation: arrive 1.2s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticket-new {
+    animation: none;
+  }
+}
