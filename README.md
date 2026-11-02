@@ -2,7 +2,17 @@
 
 Customers scan a QR code on their table, order from their phone, and the kitchen screen updates instantly. When the cook moves a ticket to "ready", the customer's phone updates too. Built for small Thai restaurants.
 
+**Live demo:** https://tabletap-nutt7.onrender.com
+
+- **Order as a customer:** [open table A1](TABLE_A1_LINK) on your phone, add a few dishes and place the order. The status on your phone changes live as the kitchen works on it.
+- Staff screens (kitchen board, back office) are behind a login; see [Run locally](#run-locally) to try them with demo accounts.
+- Hosted on a free plan: the first visit after a quiet period can take about a minute while the server wakes up.
+
 **Stack:** Next.js 16 (App Router) · TypeScript · PostgreSQL · Drizzle ORM · Redis pub/sub · Server-Sent Events · Tailwind CSS · Vitest · Docker
+
+| Customer (phone) | Kitchen board | Back office: tables & QR |
+| --- | --- | --- |
+| <img src="docs/screenshots/customer.png" alt="Customer menu with cart on a phone" width="240"> | <img src="docs/screenshots/kitchen.png" alt="Kitchen board with new, cooking and ready columns" width="420"> | <img src="docs/screenshots/admin-qr.png" alt="Back office listing tables with their QR codes" width="420"> |
 
 ## Features
 
