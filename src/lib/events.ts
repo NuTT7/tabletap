@@ -41,9 +41,11 @@ function createMemoryBus(): Bus {
 }
 
 function createRedisBus(url: string): Bus {
-  const pub = new Redis(url, { maxRetriesPerRequest: 2 });
+  // family: 0 lets ioredis use IPv6 as well as IPv4 (some hosts' private
+  // networks, e.g. Railway, are IPv6-only).
+  const pub = new Redis(url, { maxRetriesPerRequest: 2, family: 0 });
   // A connection in subscriber mode can't run other commands, so it gets its own.
-  const sub = new Redis(url);
+  const sub = new Redis(url, { family: 0 });
   const local = new EventEmitter();
   local.setMaxListeners(0);
   const refCounts = new Map<string, number>();

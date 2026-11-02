@@ -80,7 +80,21 @@ The integration tests run against a real PostgreSQL database and cover the concu
 
 ## Deploying
 
-SSE needs long-lived connections, so deploy to a platform that runs a normal Node server (Railway, Fly.io, Render, a VPS with Docker) rather than short-lived serverless functions. Provide `DATABASE_URL`, `REDIS_URL`, `SESSION_SECRET` (32+ random characters) and `APP_URL`. The Docker image runs migrations on start.
+SSE needs long-lived connections, so deploy to a platform that runs a normal Node server (Railway, Fly.io, Render, a VPS with Docker) rather than short-lived serverless functions. The Docker image runs migrations on start and listens on `$PORT`.
+
+### Railway
+
+1. New project → **Deploy from GitHub repo** → pick this repo (Railway builds the `Dockerfile`).
+2. In the project, **+ New → Database → PostgreSQL**, then **+ New → Database → Redis**.
+3. In the app service → **Variables**, add:
+   - `DATABASE_URL` = `${{Postgres.DATABASE_URL}}`
+   - `REDIS_URL` = `${{Redis.REDIS_URL}}`
+   - `SESSION_SECRET` = 32+ random characters
+   - `APP_URL` = the service's public URL (Settings → Networking → Generate Domain)
+4. Seed once from your computer with the Postgres service's **public** connection URL and your own passwords:
+   ```bash
+   DATABASE_URL="<public postgres url>" ADMIN_PASSWORD="..." KITCHEN_PASSWORD="..." npm run db:seed
+   ```
 
 ## Project structure
 

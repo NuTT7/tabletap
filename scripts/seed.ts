@@ -15,9 +15,14 @@ if (existing.length > 0) {
   process.exit(0);
 }
 
+// On a public deployment, set ADMIN_PASSWORD and KITCHEN_PASSWORD when seeding
+// so the demo passwords from the README don't work there.
+const adminPassword = process.env.ADMIN_PASSWORD ?? "admin1234";
+const kitchenPassword = process.env.KITCHEN_PASSWORD ?? "kitchen1234";
+
 await db.insert(schema.staff).values([
-  { username: "admin", passwordHash: await bcrypt.hash("admin1234", 10), role: "admin" },
-  { username: "kitchen", passwordHash: await bcrypt.hash("kitchen1234", 10), role: "kitchen" },
+  { username: "admin", passwordHash: await bcrypt.hash(adminPassword, 10), role: "admin" },
+  { username: "kitchen", passwordHash: await bcrypt.hash(kitchenPassword, 10), role: "kitchen" },
 ]);
 
 await db.insert(schema.diningTables).values(
@@ -50,5 +55,9 @@ await db.insert(schema.menuItems).values([
   { categoryId: drinks.id, name: "น้ำเปล่า", description: "", priceSatang: 1500 },
 ]);
 
-console.log("Seeded: staff admin/admin1234 and kitchen/kitchen1234, 6 tables, 10 menu items");
+console.log(
+  process.env.ADMIN_PASSWORD
+    ? "Seeded: staff admin and kitchen (your passwords), 6 tables, 10 menu items"
+    : "Seeded: staff admin/admin1234 and kitchen/kitchen1234, 6 tables, 10 menu items",
+);
 await client.end();
